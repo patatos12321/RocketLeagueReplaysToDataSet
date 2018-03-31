@@ -23,8 +23,8 @@ namespace RocketLeagueReplaysToDataSet.Utils
                 {
                     Number = frameNo,
                     Ball = new Ball() { ActorID = referenceRow.Ball.ActorID },
-                    Player = new Player() { ActorID = referenceRow.Player.ActorID, RBSActorID = referenceRow.Player.RBSActorID },
-                    EnemyPlayer = new Player() { ActorID = referenceRow.EnemyPlayer.ActorID, RBSActorID = referenceRow.EnemyPlayer.RBSActorID }
+                    Player = new Player() { ActorID = referenceRow.Player.ActorID },
+                    EnemyPlayer = new Player() { ActorID = referenceRow.EnemyPlayer.ActorID }
                 };
                 foreach (Replication replication in json.Content.Body.Frames[frameNo].Replications)
                 {
@@ -45,23 +45,12 @@ namespace RocketLeagueReplaysToDataSet.Utils
                         {
                             foreach (Updated updated in replication.Value.Updated)
                             {
-                                //get the ID of the actor who is being updated
-                                int actorID = int.Parse(replication.ActorId.Value.ToString());
-
-                                if (actorID == currentFrameRow.Player.ActorID)
-                                {
-                                    referenceRow.Player.RBSActorID = replication.Value.Updated[0].Id.Value;
-                                    currentFrameRow.Player.RBSActorID = replication.Value.Updated[0].Id.Value;
-                                }
-                                else if(actorID == currentFrameRow.EnemyPlayer.ActorID)
-                                {
-                                    referenceRow.EnemyPlayer.RBSActorID = replication.Value.Updated[0].Id.Value;
-                                    currentFrameRow.EnemyPlayer.RBSActorID = replication.Value.Updated[0].Id.Value;
-                                }
-
                                 //a rigidbody was updated! something moved
                                 if (updated?.Value?.RigidBodyState?.Location != null)
                                 {
+                                    //get the ID of the actor who is being updated
+                                    int actorID = int.Parse(replication.ActorId.Value.ToString());
+
                                     int x = int.Parse(updated.Value.RigidBodyState.Location.X.ToString());
                                     int y = int.Parse(updated.Value.RigidBodyState.Location.Y.ToString());
 
@@ -110,33 +99,28 @@ namespace RocketLeagueReplaysToDataSet.Utils
                         currentFrameRow.Ball.Location2D = dataRows[frameNo - 1].Ball.Location2D;
                     }
                 }
-                
+
 
                 //we finish looking for replications in a frame, let's add the frame to our list of row
                 dataRows.Add(currentFrameRow);
             }
 
-            //This is what we do it all for! find which frames gave a goal!
-            foreach (Mark mark in json.Content.Body.Marks)
+            //This is what we do it all for!find which frames gave a goal!
+            foreach (PurpleArray goal in json.Header.Body.Properties.Value.Goals.Value.Array)
             {
-                if (mark.Value != "Team0Goal" && mark.Value != "Team1Goal")
-                {
-                    continue;
-                }
-
                 //we will take every frame before a goal until the goal happens for a set number a frame. these are the frames that we consider good
-                int minFrameForGoal = int.Parse(mark.Frame.ToString()) - _nbFrameBeforeGoal;
+                int minFrameForGoal = int.Parse(goal.Value.Frame.Value.Int.ToString()) -_nbFrameBeforeGoal;
                 if (minFrameForGoal < 1)
                 {
                     //this will make sure a goal scored in under the _nbFrameBeforeGoal doesn't crash
                     minFrameForGoal = 1;
                 }
 
-                if (mark.Value == "Team0Goal")
+                if (goal.Value.PlayerTeam.Value.Int == 0)
                 {
                     //these are the frames that scored a goal for the player's team! :D
                     //these are good patterns that lead to a goal! so we give it the highest possible score : 100
-                    for (int frameNo = minFrameForGoal; frameNo < mark.Frame; frameNo++)
+                    for (int frameNo = minFrameForGoal; frameNo < goal.Value.Frame.Value.Int; frameNo++)
                     {
                         foreach (MLDataRow row in dataRows)
                         {
@@ -149,11 +133,11 @@ namespace RocketLeagueReplaysToDataSet.Utils
                         }
                     }
                 }
-                else if (mark.Value == "Team1Goal")
+                else if (goal.Value.PlayerTeam.Value.Int == 1)
                 {
                     //these are the frames that scored a goal for the enemy team! :'(
                     //these are bad patterns that lead to a goal in the wrong net! so we give it the lowest possible score : 0
-                    for (int frameNo = minFrameForGoal; frameNo < mark.Frame; frameNo++)
+                    for (int frameNo = minFrameForGoal; frameNo < goal.Value.Frame.Value.Int; frameNo++)
                     {
                         foreach (MLDataRow row in dataRows)
                         {
@@ -177,16 +161,16 @@ namespace RocketLeagueReplaysToDataSet.Utils
         /// <param name="replication">the replication of the spawn</param>
         private static void SetNewSpawnActorID(MLDataRow row, Replication replication)
         {
-            if (replication.Value.Spawned.ClassName == ClassName.TaGameTeamSoccarTa)
+            if (replication.Value.Spawned.ClassName == ClassName.TaGameCarTa)
             {
+                //Actually, I have to check for car boost spawning.... the actual player of the replay never spawns...
                 //a car has spawned
-                //if (replication.Value.Spawned.Name == "Team_Soccar_TA_1")
-                if (replication.Value.Spawned.ObjectName == "Archetypes.Teams.Team0")
+                if (replication.Value.Spawned.Name.EndsWith("TA_0"))
                 {
                     //it is the player's car
                     row.Player.ActorID = int.Parse(replication.ActorId.Value.ToString());
                 }
-                else if (replication.Value.Spawned.ObjectName == "Archetypes.Teams.Team1")
+                else if (replication.Value.Spawned.Name.EndsWith("TA_1"))
                 {
                     //it is the opponent's car
                     row.EnemyPlayer.ActorID = int.Parse(replication.ActorId.Value.ToString());

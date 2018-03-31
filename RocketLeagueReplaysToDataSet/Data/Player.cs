@@ -11,6 +11,5 @@ namespace RocketLeagueReplaysToDataSet.Data
     {
         public Point Location2D;
         public int ActorID;
-        public long RBSActorID;
     }
 }
