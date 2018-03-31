@@ -24,8 +24,8 @@ namespace RocketLeagueReplaysToDataSet.Utils
                 int timeout = 999999999;
 
                 //Start rattletrap and convert target replay
-                process.StartInfo.FileName = Properties.Settings.Default.RattletrapPath;
-                process.StartInfo.Arguments = "-i \"" + replayPath + "\" > output.json";
+                process.StartInfo.FileName = Properties.Settings.Default.ParserPath;
+                process.StartInfo.Arguments = "\"" + replayPath + "\"";
                 process.StartInfo.UseShellExecute = false;
                 process.StartInfo.CreateNoWindow = true;
                 process.StartInfo.RedirectStandardOutput = true;

@@ -58,14 +58,14 @@ namespace RocketLeagueReplaysToDataSet
         {
             TxtReplayFolder.Text = Properties.Settings.Default.ReplayFolder;
             TxtDataSetFolder.Text = Properties.Settings.Default.DataSetFolder;
-            txtRattletrapPath.Text = Properties.Settings.Default.RattletrapPath;
+            txtRattletrapPath.Text = Properties.Settings.Default.ParserPath;
         }
 
         private void SaveConfig()
         {
             Properties.Settings.Default.ReplayFolder = TxtReplayFolder.Text;
             Properties.Settings.Default.DataSetFolder = TxtDataSetFolder.Text;
-            Properties.Settings.Default.RattletrapPath = txtRattletrapPath.Text;
+            Properties.Settings.Default.ParserPath = txtRattletrapPath.Text;
             Properties.Settings.Default.Save();
         }
 

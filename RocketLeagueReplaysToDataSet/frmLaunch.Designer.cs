@@ -112,11 +112,11 @@
             // LblRattletrapPath
             // 
             this.LblRattletrapPath.AutoSize = true;
-            this.LblRattletrapPath.Location = new System.Drawing.Point(4, 61);
+            this.LblRattletrapPath.Location = new System.Drawing.Point(20, 61);
             this.LblRattletrapPath.Name = "LblRattletrapPath";
-            this.LblRattletrapPath.Size = new System.Drawing.Size(77, 13);
+            this.LblRattletrapPath.Size = new System.Drawing.Size(61, 13);
             this.LblRattletrapPath.TabIndex = 6;
-            this.LblRattletrapPath.Text = "Rattletrap path";
+            this.LblRattletrapPath.Text = "Parser path";
             // 
             // btnConvert
             // 

@@ -8,7 +8,7 @@
     <Setting Name="DataSetFolder" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
-    <Setting Name="RattletrapPath" Type="System.String" Scope="User">
+    <Setting Name="ParserPath" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
   </Settings>
