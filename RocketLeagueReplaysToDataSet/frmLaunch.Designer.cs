@@ -38,6 +38,7 @@
             this.txtRattletrapPath = new System.Windows.Forms.TextBox();
             this.LblRattletrapPath = new System.Windows.Forms.Label();
             this.btnConvert = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // LblReplayFolder
@@ -128,11 +129,22 @@
             this.btnConvert.UseVisualStyleBackColor = true;
             this.btnConvert.Click += new System.EventHandler(this.btnConvert_Click);
             // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(87, 86);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(296, 23);
+            this.button1.TabIndex = 10;
+            this.button1.Text = "Convert replays for visualisation";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // frmLaunch
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(550, 121);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.btnConvert);
             this.Controls.Add(this.btnRattletrapPath);
             this.Controls.Add(this.txtRattletrapPath);
@@ -162,6 +174,7 @@
         private System.Windows.Forms.TextBox txtRattletrapPath;
         private System.Windows.Forms.Label LblRattletrapPath;
         private System.Windows.Forms.Button btnConvert;
+        private System.Windows.Forms.Button button1;
     }
 }
 
