@@ -73,6 +73,7 @@ namespace RocketLeagueReplaysToDataSet.Utils
                     Point actorLocation = new Point();
                     string actorRotationX = String.Empty;
                     string actorRotationY = String.Empty;
+                    string actorRotationZ = String.Empty;
 
                     if (update?.TaGameRbActorTaReplicatedRbState?.Position != null)
                     {
@@ -83,6 +84,7 @@ namespace RocketLeagueReplaysToDataSet.Utils
                     {
                         actorRotationX = update.TaGameRbActorTaReplicatedRbState.Rotation.X.ToString().Replace(',', '.');
                         actorRotationY = update.TaGameRbActorTaReplicatedRbState.Rotation.Y.ToString().Replace(',', '.');
+                        actorRotationZ = update.TaGameRbActorTaReplicatedRbState.Rotation.Z.ToString().Replace(',', '.');
                     }
 
                     if (update.ClassName == "TAGame.Ball_TA")
@@ -123,12 +125,14 @@ namespace RocketLeagueReplaysToDataSet.Utils
                         currentFrameRow.Player.Location2D = actorLocation;
                         currentFrameRow.Player.Rotation2DX = actorRotationX;
                         currentFrameRow.Player.Rotation2DY = actorRotationY;
+                        currentFrameRow.Player.Rotation2DZ = actorRotationZ;
                     }
                     else if (update.Id == currentFrameRow.EnemyPlayer.ActorID)
                     {
                         currentFrameRow.EnemyPlayer.Location2D = actorLocation;
                         currentFrameRow.EnemyPlayer.Rotation2DX = actorRotationX;
                         currentFrameRow.EnemyPlayer.Rotation2DY = actorRotationY;
+                        currentFrameRow.EnemyPlayer.Rotation2DZ = actorRotationZ;
                     }
 
 
@@ -142,6 +146,7 @@ namespace RocketLeagueReplaysToDataSet.Utils
                         currentFrameRow.Player.Location2D = dataRows[frameNo - 1].Player.Location2D;
                         currentFrameRow.Player.Rotation2DX = dataRows[frameNo - 1].Player.Rotation2DX;
                         currentFrameRow.Player.Rotation2DY = dataRows[frameNo - 1].Player.Rotation2DY;
+                        currentFrameRow.Player.Rotation2DZ = dataRows[frameNo - 1].Player.Rotation2DZ;
                     }
                 }
                 if (currentFrameRow.EnemyPlayer.Location2D == Point.Empty)
@@ -151,6 +156,7 @@ namespace RocketLeagueReplaysToDataSet.Utils
                         currentFrameRow.EnemyPlayer.Location2D = dataRows[frameNo - 1].EnemyPlayer.Location2D;
                         currentFrameRow.EnemyPlayer.Rotation2DX = dataRows[frameNo - 1].EnemyPlayer.Rotation2DX;
                         currentFrameRow.EnemyPlayer.Rotation2DY = dataRows[frameNo - 1].EnemyPlayer.Rotation2DY;
+                        currentFrameRow.EnemyPlayer.Rotation2DZ = dataRows[frameNo - 1].EnemyPlayer.Rotation2DZ;
                     }
                 }
                 if (currentFrameRow.Ball.Location2D == Point.Empty)
