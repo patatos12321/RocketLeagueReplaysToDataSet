@@ -56,7 +56,7 @@ namespace RocketLeagueReplaysToDataSet.Utils
                         referenceRow.Ball.ActorID = nullActorID;
                         currentFrameRow.Ball.ActorID = nullActorID;
                     }
-                    else if(referenceRow.Player.ActorID == int.Parse(deletedID.ToString()))
+                    else if (referenceRow.Player.ActorID == int.Parse(deletedID.ToString()))
                     {
                         referenceRow.Player.ActorID = nullActorID;
                         currentFrameRow.Player.ActorID = nullActorID;
@@ -71,10 +71,18 @@ namespace RocketLeagueReplaysToDataSet.Utils
                 foreach (ActorUpdate update in json.Frames[frameNo].ActorUpdates)
                 {
                     Point actorLocation = new Point();
+                    string actorRotationX = String.Empty;
+                    string actorRotationY = String.Empty;
 
                     if (update?.TaGameRbActorTaReplicatedRbState?.Position != null)
                     {
                         actorLocation = new Point(int.Parse(update.TaGameRbActorTaReplicatedRbState.Position.X.ToString()), int.Parse(update.TaGameRbActorTaReplicatedRbState.Position.Y.ToString()));
+                    }
+
+                    if (update?.TaGameRbActorTaReplicatedRbState?.Rotation != null)
+                    {
+                        actorRotationX = update.TaGameRbActorTaReplicatedRbState.Rotation.X.ToString().Replace(',', '.');
+                        actorRotationY = update.TaGameRbActorTaReplicatedRbState.Rotation.Y.ToString().Replace(',', '.');
                     }
 
                     if (update.ClassName == "TAGame.Ball_TA")
@@ -108,15 +116,19 @@ namespace RocketLeagueReplaysToDataSet.Utils
                         if (update.TaGameRbActorTaReplicatedRbState.LinearVelocity != null)
                         {
                             currentFrameRow.Ball.Velocity2D = new Point(int.Parse(update.TaGameRbActorTaReplicatedRbState.LinearVelocity.X.ToString()), int.Parse(update.TaGameRbActorTaReplicatedRbState.LinearVelocity.Y.ToString()));
-                        }   
+                        }
                     }
                     else if (update.Id == currentFrameRow.Player.ActorID)
                     {
                         currentFrameRow.Player.Location2D = actorLocation;
+                        currentFrameRow.Player.Rotation2DX = actorRotationX;
+                        currentFrameRow.Player.Rotation2DY = actorRotationY;
                     }
                     else if (update.Id == currentFrameRow.EnemyPlayer.ActorID)
                     {
                         currentFrameRow.EnemyPlayer.Location2D = actorLocation;
+                        currentFrameRow.EnemyPlayer.Rotation2DX = actorRotationX;
+                        currentFrameRow.EnemyPlayer.Rotation2DY = actorRotationY;
                     }
 
 
@@ -128,6 +140,8 @@ namespace RocketLeagueReplaysToDataSet.Utils
                     if (frameNo > 0)
                     {
                         currentFrameRow.Player.Location2D = dataRows[frameNo - 1].Player.Location2D;
+                        currentFrameRow.Player.Rotation2DX = dataRows[frameNo - 1].Player.Rotation2DX;
+                        currentFrameRow.Player.Rotation2DY = dataRows[frameNo - 1].Player.Rotation2DY;
                     }
                 }
                 if (currentFrameRow.EnemyPlayer.Location2D == Point.Empty)
@@ -135,6 +149,8 @@ namespace RocketLeagueReplaysToDataSet.Utils
                     if (frameNo > 0)
                     {
                         currentFrameRow.EnemyPlayer.Location2D = dataRows[frameNo - 1].EnemyPlayer.Location2D;
+                        currentFrameRow.EnemyPlayer.Rotation2DX = dataRows[frameNo - 1].EnemyPlayer.Rotation2DX;
+                        currentFrameRow.EnemyPlayer.Rotation2DY = dataRows[frameNo - 1].EnemyPlayer.Rotation2DY;
                     }
                 }
                 if (currentFrameRow.Ball.Location2D == Point.Empty)
@@ -160,7 +176,7 @@ namespace RocketLeagueReplaysToDataSet.Utils
                     //this will make sure a goal scored in under the _TimeBeforeGoal doesn't crash
                     minTimeForGoal = 1;
                 }
-                
+
                 if (goal.PlayerTeam == 0)
                 {
                     foreach (MLDataRow row in dataRows)

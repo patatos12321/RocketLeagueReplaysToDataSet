@@ -7,7 +7,7 @@ namespace RocketLeagueReplaysToDataSet.Utils
 {
     public static class FullConverter
     {
-        public static void Launch(bool saveUselessRows)
+        public static void Launch(bool dataSetForReplay)
         {
             foreach (string replayPath in Directory.GetFiles(Properties.Settings.Default.ReplayFolder))
             {
@@ -16,7 +16,7 @@ namespace RocketLeagueReplaysToDataSet.Utils
                     ReplayJson replayJson = RocketLeagueReplayToJsonConverter.ConvertReplayToJson(replayPath, true);
                     List<MLDataRow> dataRows = ReplayJsonToDataRowConverter.ConvertReplayJsonToDataRow(replayJson);
 
-                    WriteDataSet(dataRows, saveUselessRows);
+                    WriteDataSet(dataRows, dataSetForReplay);
                 }
             }
         }
@@ -25,21 +25,38 @@ namespace RocketLeagueReplaysToDataSet.Utils
         /// Writes the data set in the folder specified in the settings file
         /// </summary>
         /// <param name="dataRows">The list of dataRow to include in the dataset</param>
-        public static void WriteDataSet(IEnumerable<MLDataRow> dataRows, bool saveUselessRows)
+        public static void WriteDataSet(IEnumerable<MLDataRow> dataRows, bool dataSetForReplay)
         {
+            string fileToWrite;
             List<string> dataSet = new List<string>();
 
-            dataSet.Add(MLDataRow.DataRowFormat);
-
+            if (dataSetForReplay)
+            {
+                fileToWrite = Properties.Settings.Default.DataSetFolder + "/dataset.rlu";
+                dataSet.Add(MLDataRow.DataRowFormatForReplay);
+            }
+            else
+            {
+                fileToWrite = Properties.Settings.Default.DataSetFolder + "/dataset.csv";
+                dataSet.Add(MLDataRow.DataRowFormat);
+            }
+            
             foreach (MLDataRow row in dataRows)
             {
-                if (row.Useful || saveUselessRows)
+                if (dataSetForReplay)
                 {
+                    //For a replay, I want to take every row's display with additional information
+                    dataSet.Add(row.DisplayDataRowForReplay());
+                }
+                else if (row.Useful)
+                {
+                    //for a ML dataset, I will only take the essential informations and useful frames
                     dataSet.Add(row.DisplayDataRow());
                 }
             }
 
-            File.WriteAllLines(Properties.Settings.Default.DataSetFolder + "/dataset.csv", dataSet);
+            
+            File.WriteAllLines(fileToWrite, dataSet);
         }
 
     }
