@@ -9,7 +9,7 @@ namespace RocketLeagueReplaysToDataSet.Data
     public class MLDataRow
     {
         public const string DataRowFormat = "BallX,BallY,BallZ,BallVelocityX,BallVelocityY,PlayerX,PlayerY,PlayerZ,EnemyPlayerX,EnemyPlayerY,EnemyPlayerZ,Label";
-        public const string DataRowFormatForReplay = "BallX,BallY,BallZ,BallVelocityX,BallVelocityY,PlayerX,PlayerY,PlayerZ,PlayerRotationX,PlayerRotationY,PlayerRotationZ,EnemyPlayerX,EnemyPlayerY,EnemyPlayerZ,EnemyPlayerRotationX,EnemyPlayerRotationY,EnemyPlayerRotatioZ,Label";
+        public const string DataRowFormatForReplay = "BallX,BallY,BallZ,BallVelocityX,BallVelocityY,BallVelocityZ,PlayerX,PlayerY,PlayerZ,PlayerRotationX,PlayerRotationY,PlayerRotationZ,EnemyPlayerX,EnemyPlayerY,EnemyPlayerZ,EnemyPlayerRotationX,EnemyPlayerRotationY,EnemyPlayerRotatioZ,Label";
 
         public int Number;
         public double Time;
