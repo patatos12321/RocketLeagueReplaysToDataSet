@@ -9,8 +9,8 @@ namespace RocketLeagueReplaysToDataSet.Data
 {
     public class Ball
     {
-        public Point Location2D;
-        public Point Velocity2D;
+        public Location Location = Location.Empty;
+        public Location Velocity = Location.Empty;
         public int ActorID;
     }
 }

@@ -16,7 +16,7 @@ namespace RocketLeagueReplaysToDataSet.Utils
                     ReplayJson replayJson = RocketLeagueReplayToJsonConverter.ConvertReplayToJson(replayPath, true);
                     List<MLDataRow> dataRows = ReplayJsonToDataRowConverter.ConvertReplayJsonToDataRow(replayJson);
 
-                    WriteDataSet(dataRows, dataSetForReplay);
+                    WriteDataSet(dataRows, dataSetForReplay, Path.GetFileNameWithoutExtension(replayPath));
                 }
             }
         }
@@ -25,19 +25,19 @@ namespace RocketLeagueReplaysToDataSet.Utils
         /// Writes the data set in the folder specified in the settings file
         /// </summary>
         /// <param name="dataRows">The list of dataRow to include in the dataset</param>
-        public static void WriteDataSet(IEnumerable<MLDataRow> dataRows, bool dataSetForReplay)
+        public static void WriteDataSet(IEnumerable<MLDataRow> dataRows, bool dataSetForReplay, string fileName)
         {
             string fileToWrite;
             List<string> dataSet = new List<string>();
 
             if (dataSetForReplay)
             {
-                fileToWrite = Properties.Settings.Default.DataSetFolder + "/dataset.rlu";
+                fileToWrite = Path.Combine(Properties.Settings.Default.DataSetFolder, fileName) + ".rlu";
                 dataSet.Add(MLDataRow.DataRowFormatForReplay);
             }
             else
             {
-                fileToWrite = Properties.Settings.Default.DataSetFolder + "/dataset.csv";
+                fileToWrite = Path.Combine(Properties.Settings.Default.DataSetFolder, fileName) + ".csv";
                 dataSet.Add(MLDataRow.DataRowFormat);
             }
             

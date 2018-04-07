@@ -716,7 +716,7 @@ namespace RocketLeagueReplaysToDataSet.Data.RawReplayJsonClasses
 
     public enum SteamProfileUrl { HttpSteamcommunityComProfiles76561198029751331, HttpSteamcommunityComProfiles76561198355227431 };
 
-    public enum PlayerName { Nathalie };
+    public enum PlayerName { Nathalie, Player };
 
     public enum ClassName { TaGameProductAttributePaintedTa, TaGameProductAttributeUserColorTa };
 
@@ -739,7 +739,7 @@ namespace RocketLeagueReplaysToDataSet.Data.RawReplayJsonClasses
             {
                 case "http://steamcommunity.com/profiles/76561198029751331": return SteamProfileUrl.HttpSteamcommunityComProfiles76561198029751331;
                 case "http://steamcommunity.com/profiles/76561198355227431": return SteamProfileUrl.HttpSteamcommunityComProfiles76561198355227431;
-                default: return null;
+                default: return SteamProfileUrl.HttpSteamcommunityComProfiles76561198029751331;
             }
         }
 
@@ -765,11 +765,7 @@ namespace RocketLeagueReplaysToDataSet.Data.RawReplayJsonClasses
     {
         public static PlayerName? ValueForString(string str)
         {
-            switch (str)
-            {
-                case "Nathalie": return PlayerName.Nathalie;
-                default: return null;
-            }
+            return PlayerName.Player;
         }
 
         public static PlayerName ReadJson(JsonReader reader, JsonSerializer serializer)

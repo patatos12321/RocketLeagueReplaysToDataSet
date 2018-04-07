@@ -9,10 +9,10 @@ namespace RocketLeagueReplaysToDataSet.Data
 {
     public class Player
     {
-        public Point Location2D;
-        public string Rotation2DX;
-        public string Rotation2DY;
-        public string Rotation2DZ;
+        public Location Location = Location.Empty;
+        public string RotationX;
+        public string RotationY;
+        public string RotationZ;
         public int ActorID;
     }
 }

@@ -26,7 +26,7 @@ namespace RocketLeagueReplaysToDataSet.Utils
             long playerTeamNumber = 0;
             foreach (PlayerStat player in json.Properties.PlayerStats)
             {
-                if (player.Name == "patatos12321")
+                if (player.Name == Properties.Settings.Default.SteamUsername)
                 {
                     //My name is hardcoded.... but I could find a more intelligent way to do it
                     //TODO: find a better way to find the player's team, I could probably find info on the person who saved the replay
@@ -70,14 +70,14 @@ namespace RocketLeagueReplaysToDataSet.Utils
 
                 foreach (ActorUpdate update in json.Frames[frameNo].ActorUpdates)
                 {
-                    Point actorLocation = new Point();
+                    Location actorLocation = new Location();
                     string actorRotationX = String.Empty;
                     string actorRotationY = String.Empty;
                     string actorRotationZ = String.Empty;
 
                     if (update?.TaGameRbActorTaReplicatedRbState?.Position != null)
                     {
-                        actorLocation = new Point(int.Parse(update.TaGameRbActorTaReplicatedRbState.Position.X.ToString()), int.Parse(update.TaGameRbActorTaReplicatedRbState.Position.Y.ToString()));
+                        actorLocation = new Location(int.Parse(update.TaGameRbActorTaReplicatedRbState.Position.X.ToString()), int.Parse(update.TaGameRbActorTaReplicatedRbState.Position.Y.ToString()), int.Parse(update.TaGameRbActorTaReplicatedRbState.Position.Z.ToString()));
                     }
 
                     if (update?.TaGameRbActorTaReplicatedRbState?.Rotation != null)
@@ -114,56 +114,56 @@ namespace RocketLeagueReplaysToDataSet.Utils
 
                     if (update.Id == currentFrameRow.Ball.ActorID)
                     {
-                        currentFrameRow.Ball.Location2D = actorLocation;
+                        currentFrameRow.Ball.Location = actorLocation;
                         if (update.TaGameRbActorTaReplicatedRbState.LinearVelocity != null)
                         {
-                            currentFrameRow.Ball.Velocity2D = new Point(int.Parse(update.TaGameRbActorTaReplicatedRbState.LinearVelocity.X.ToString()), int.Parse(update.TaGameRbActorTaReplicatedRbState.LinearVelocity.Y.ToString()));
+                            currentFrameRow.Ball.Velocity = new Location(int.Parse(update.TaGameRbActorTaReplicatedRbState.LinearVelocity.X.ToString()), int.Parse(update.TaGameRbActorTaReplicatedRbState.LinearVelocity.Y.ToString()), int.Parse(update.TaGameRbActorTaReplicatedRbState.LinearVelocity.Z.ToString()));
                         }
                     }
                     else if (update.Id == currentFrameRow.Player.ActorID)
                     {
-                        currentFrameRow.Player.Location2D = actorLocation;
-                        currentFrameRow.Player.Rotation2DX = actorRotationX;
-                        currentFrameRow.Player.Rotation2DY = actorRotationY;
-                        currentFrameRow.Player.Rotation2DZ = actorRotationZ;
+                        currentFrameRow.Player.Location = actorLocation;
+                        currentFrameRow.Player.RotationX = actorRotationX;
+                        currentFrameRow.Player.RotationY = actorRotationY;
+                        currentFrameRow.Player.RotationZ = actorRotationZ;
                     }
                     else if (update.Id == currentFrameRow.EnemyPlayer.ActorID)
                     {
-                        currentFrameRow.EnemyPlayer.Location2D = actorLocation;
-                        currentFrameRow.EnemyPlayer.Rotation2DX = actorRotationX;
-                        currentFrameRow.EnemyPlayer.Rotation2DY = actorRotationY;
-                        currentFrameRow.EnemyPlayer.Rotation2DZ = actorRotationZ;
+                        currentFrameRow.EnemyPlayer.Location = actorLocation;
+                        currentFrameRow.EnemyPlayer.RotationX = actorRotationX;
+                        currentFrameRow.EnemyPlayer.RotationY = actorRotationY;
+                        currentFrameRow.EnemyPlayer.RotationZ = actorRotationZ;
                     }
 
 
                 }
 
                 //if we have no position for an element on this frame, we'll assume the object has the same position he had last frame
-                if (currentFrameRow.Player.Location2D == Point.Empty)
+                if (currentFrameRow.Player.Location.Equals(Location.Empty))
                 {
                     if (frameNo > 0)
                     {
-                        currentFrameRow.Player.Location2D = dataRows[frameNo - 1].Player.Location2D;
-                        currentFrameRow.Player.Rotation2DX = dataRows[frameNo - 1].Player.Rotation2DX;
-                        currentFrameRow.Player.Rotation2DY = dataRows[frameNo - 1].Player.Rotation2DY;
-                        currentFrameRow.Player.Rotation2DZ = dataRows[frameNo - 1].Player.Rotation2DZ;
+                        currentFrameRow.Player.Location = dataRows[frameNo - 1].Player.Location;
+                        currentFrameRow.Player.RotationX = dataRows[frameNo - 1].Player.RotationX;
+                        currentFrameRow.Player.RotationY = dataRows[frameNo - 1].Player.RotationY;
+                        currentFrameRow.Player.RotationZ = dataRows[frameNo - 1].Player.RotationZ;
                     }
                 }
-                if (currentFrameRow.EnemyPlayer.Location2D == Point.Empty)
+                if (currentFrameRow.EnemyPlayer.Location.Equals(Location.Empty))
                 {
                     if (frameNo > 0)
                     {
-                        currentFrameRow.EnemyPlayer.Location2D = dataRows[frameNo - 1].EnemyPlayer.Location2D;
-                        currentFrameRow.EnemyPlayer.Rotation2DX = dataRows[frameNo - 1].EnemyPlayer.Rotation2DX;
-                        currentFrameRow.EnemyPlayer.Rotation2DY = dataRows[frameNo - 1].EnemyPlayer.Rotation2DY;
-                        currentFrameRow.EnemyPlayer.Rotation2DZ = dataRows[frameNo - 1].EnemyPlayer.Rotation2DZ;
+                        currentFrameRow.EnemyPlayer.Location = dataRows[frameNo - 1].EnemyPlayer.Location;
+                        currentFrameRow.EnemyPlayer.RotationX = dataRows[frameNo - 1].EnemyPlayer.RotationX;
+                        currentFrameRow.EnemyPlayer.RotationY = dataRows[frameNo - 1].EnemyPlayer.RotationY;
+                        currentFrameRow.EnemyPlayer.RotationZ = dataRows[frameNo - 1].EnemyPlayer.RotationZ;
                     }
                 }
-                if (currentFrameRow.Ball.Location2D == Point.Empty)
+                if (currentFrameRow.Ball.Location.Equals(Location.Empty))
                 {
                     if (frameNo > 0)
                     {
-                        currentFrameRow.Ball.Location2D = dataRows[frameNo - 1].Ball.Location2D;
+                        currentFrameRow.Ball.Location = dataRows[frameNo - 1].Ball.Location;
                     }
                 }
 
@@ -222,7 +222,7 @@ namespace RocketLeagueReplaysToDataSet.Utils
 
             foreach (MLDataRow row in dataRows)
             {
-                if (row.Ball.Velocity2D == Point.Empty)
+                if (row.Ball.Velocity.Equals(Location.Empty))
                 {
                     //If the ball had absolutely no velocity, I'm going to assume that there wasn't anything meaningful going on
                     //This will cut out pre-faceoff and post-goal time where the ball is not moving (after being deleted for exemple)

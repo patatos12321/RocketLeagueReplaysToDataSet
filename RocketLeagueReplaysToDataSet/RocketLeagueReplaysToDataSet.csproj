@@ -69,6 +69,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Data\Location.cs" />
     <Compile Include="Data\MLDataRow.cs" />
     <Compile Include="Data\Ball.cs" />
     <Compile Include="Data\Player.cs" />

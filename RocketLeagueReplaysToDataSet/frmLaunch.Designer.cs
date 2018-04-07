@@ -38,13 +38,15 @@
             this.txtRattletrapPath = new System.Windows.Forms.TextBox();
             this.LblRattletrapPath = new System.Windows.Forms.Label();
             this.btnConvert = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
+            this.btnConvertForReplay = new System.Windows.Forms.Button();
+            this.txtSteamUsername = new System.Windows.Forms.TextBox();
+            this.lblSteamUsername = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // LblReplayFolder
             // 
             this.LblReplayFolder.AutoSize = true;
-            this.LblReplayFolder.Location = new System.Drawing.Point(9, 9);
+            this.LblReplayFolder.Location = new System.Drawing.Point(24, 9);
             this.LblReplayFolder.Name = "LblReplayFolder";
             this.LblReplayFolder.Size = new System.Drawing.Size(72, 13);
             this.LblReplayFolder.TabIndex = 0;
@@ -52,14 +54,14 @@
             // 
             // TxtReplayFolder
             // 
-            this.TxtReplayFolder.Location = new System.Drawing.Point(87, 6);
+            this.TxtReplayFolder.Location = new System.Drawing.Point(102, 6);
             this.TxtReplayFolder.Name = "TxtReplayFolder";
             this.TxtReplayFolder.Size = new System.Drawing.Size(373, 20);
             this.TxtReplayFolder.TabIndex = 1;
             // 
             // BtnReplayFolder
             // 
-            this.BtnReplayFolder.Location = new System.Drawing.Point(466, 6);
+            this.BtnReplayFolder.Location = new System.Drawing.Point(481, 6);
             this.BtnReplayFolder.Name = "BtnReplayFolder";
             this.BtnReplayFolder.Size = new System.Drawing.Size(70, 20);
             this.BtnReplayFolder.TabIndex = 2;
@@ -69,7 +71,7 @@
             // 
             // btnDataSetFolder
             // 
-            this.btnDataSetFolder.Location = new System.Drawing.Point(466, 32);
+            this.btnDataSetFolder.Location = new System.Drawing.Point(481, 32);
             this.btnDataSetFolder.Name = "btnDataSetFolder";
             this.btnDataSetFolder.Size = new System.Drawing.Size(70, 20);
             this.btnDataSetFolder.TabIndex = 5;
@@ -79,7 +81,7 @@
             // 
             // TxtDataSetFolder
             // 
-            this.TxtDataSetFolder.Location = new System.Drawing.Point(87, 32);
+            this.TxtDataSetFolder.Location = new System.Drawing.Point(102, 32);
             this.TxtDataSetFolder.Name = "TxtDataSetFolder";
             this.TxtDataSetFolder.Size = new System.Drawing.Size(373, 20);
             this.TxtDataSetFolder.TabIndex = 4;
@@ -87,7 +89,7 @@
             // LblDataSetFolder
             // 
             this.LblDataSetFolder.AutoSize = true;
-            this.LblDataSetFolder.Location = new System.Drawing.Point(3, 35);
+            this.LblDataSetFolder.Location = new System.Drawing.Point(18, 35);
             this.LblDataSetFolder.Name = "LblDataSetFolder";
             this.LblDataSetFolder.Size = new System.Drawing.Size(78, 13);
             this.LblDataSetFolder.TabIndex = 3;
@@ -95,7 +97,7 @@
             // 
             // btnRattletrapPath
             // 
-            this.btnRattletrapPath.Location = new System.Drawing.Point(466, 58);
+            this.btnRattletrapPath.Location = new System.Drawing.Point(481, 58);
             this.btnRattletrapPath.Name = "btnRattletrapPath";
             this.btnRattletrapPath.Size = new System.Drawing.Size(70, 20);
             this.btnRattletrapPath.TabIndex = 8;
@@ -105,7 +107,7 @@
             // 
             // txtRattletrapPath
             // 
-            this.txtRattletrapPath.Location = new System.Drawing.Point(87, 58);
+            this.txtRattletrapPath.Location = new System.Drawing.Point(102, 58);
             this.txtRattletrapPath.Name = "txtRattletrapPath";
             this.txtRattletrapPath.Size = new System.Drawing.Size(373, 20);
             this.txtRattletrapPath.TabIndex = 7;
@@ -113,7 +115,7 @@
             // LblRattletrapPath
             // 
             this.LblRattletrapPath.AutoSize = true;
-            this.LblRattletrapPath.Location = new System.Drawing.Point(20, 61);
+            this.LblRattletrapPath.Location = new System.Drawing.Point(35, 61);
             this.LblRattletrapPath.Name = "LblRattletrapPath";
             this.LblRattletrapPath.Size = new System.Drawing.Size(61, 13);
             this.LblRattletrapPath.TabIndex = 6;
@@ -121,7 +123,8 @@
             // 
             // btnConvert
             // 
-            this.btnConvert.Location = new System.Drawing.Point(389, 86);
+            this.btnConvert.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnConvert.Location = new System.Drawing.Point(402, 111);
             this.btnConvert.Name = "btnConvert";
             this.btnConvert.Size = new System.Drawing.Size(149, 23);
             this.btnConvert.TabIndex = 9;
@@ -129,22 +132,41 @@
             this.btnConvert.UseVisualStyleBackColor = true;
             this.btnConvert.Click += new System.EventHandler(this.btnConvert_Click);
             // 
-            // button1
+            // btnConvertForReplay
             // 
-            this.button1.Location = new System.Drawing.Point(87, 86);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(296, 23);
-            this.button1.TabIndex = 10;
-            this.button1.Text = "Convert replays for visualisation";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.btnConvertForReplay.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnConvertForReplay.Location = new System.Drawing.Point(100, 111);
+            this.btnConvertForReplay.Name = "btnConvertForReplay";
+            this.btnConvertForReplay.Size = new System.Drawing.Size(296, 23);
+            this.btnConvertForReplay.TabIndex = 10;
+            this.btnConvertForReplay.Text = "Convert replays for visualisation";
+            this.btnConvertForReplay.UseVisualStyleBackColor = true;
+            this.btnConvertForReplay.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // txtSteamUsername
+            // 
+            this.txtSteamUsername.Location = new System.Drawing.Point(102, 84);
+            this.txtSteamUsername.Name = "txtSteamUsername";
+            this.txtSteamUsername.Size = new System.Drawing.Size(373, 20);
+            this.txtSteamUsername.TabIndex = 12;
+            // 
+            // lblSteamUsername
+            // 
+            this.lblSteamUsername.AutoSize = true;
+            this.lblSteamUsername.Location = new System.Drawing.Point(10, 87);
+            this.lblSteamUsername.Name = "lblSteamUsername";
+            this.lblSteamUsername.Size = new System.Drawing.Size(86, 13);
+            this.lblSteamUsername.TabIndex = 11;
+            this.lblSteamUsername.Text = "Steam username";
             // 
             // frmLaunch
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(550, 121);
-            this.Controls.Add(this.button1);
+            this.ClientSize = new System.Drawing.Size(563, 146);
+            this.Controls.Add(this.txtSteamUsername);
+            this.Controls.Add(this.lblSteamUsername);
+            this.Controls.Add(this.btnConvertForReplay);
             this.Controls.Add(this.btnConvert);
             this.Controls.Add(this.btnRattletrapPath);
             this.Controls.Add(this.txtRattletrapPath);
@@ -174,7 +196,9 @@
         private System.Windows.Forms.TextBox txtRattletrapPath;
         private System.Windows.Forms.Label LblRattletrapPath;
         private System.Windows.Forms.Button btnConvert;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btnConvertForReplay;
+        private System.Windows.Forms.TextBox txtSteamUsername;
+        private System.Windows.Forms.Label lblSteamUsername;
     }
 }
 

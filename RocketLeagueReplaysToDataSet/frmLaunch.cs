@@ -59,6 +59,7 @@ namespace RocketLeagueReplaysToDataSet
             TxtReplayFolder.Text = Properties.Settings.Default.ReplayFolder;
             TxtDataSetFolder.Text = Properties.Settings.Default.DataSetFolder;
             txtRattletrapPath.Text = Properties.Settings.Default.ParserPath;
+            txtSteamUsername.Text = Properties.Settings.Default.SteamUsername;
         }
 
         private void SaveConfig()
@@ -66,16 +67,19 @@ namespace RocketLeagueReplaysToDataSet
             Properties.Settings.Default.ReplayFolder = TxtReplayFolder.Text;
             Properties.Settings.Default.DataSetFolder = TxtDataSetFolder.Text;
             Properties.Settings.Default.ParserPath = txtRattletrapPath.Text;
+            Properties.Settings.Default.SteamUsername = txtSteamUsername.Text;
             Properties.Settings.Default.Save();
         }
 
         private void btnConvert_Click(object sender, EventArgs e)
         {
+            SaveConfig();
             FullConverter.Launch(false);
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
+            SaveConfig();
             FullConverter.Launch(true);
         }
     }
